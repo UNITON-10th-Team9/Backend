@@ -1,6 +1,15 @@
 package com.example.backend.domain.user.model;
 
-import jakarta.persistence.*;
+import com.example.backend.domain.user.controller.dto.request.UserRequestDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +24,7 @@ public class User {
 
     @Id
     @PrimaryKeyJoinColumn
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(columnDefinition = "VARCHAR(60)", nullable = false)
@@ -43,5 +53,25 @@ public class User {
     private String introduce;
 
     @Column(columnDefinition = "VARCHAR(255)")
-    private String url;
+    private String githubUrl;
+
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String linkedInUrl;
+
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String instagramUrl;
+
+    public void setUserInformation(final UserRequestDto dto) {
+        this.name = dto.getName();
+        this.email = dto.getEmail();
+        this.phoneNumber = dto.getPhoneNumber();
+        this.position = dto.getPosition();
+        this.organization = dto.getOrganization();
+        this.annual = dto.getAnnual();
+        this.profileImageUrl = dto.getProfileImageUrl();
+        this.introduce = dto.getIntroduce();
+        this.githubUrl = dto.getGithubUrl();
+        this.linkedInUrl = dto.getLinkedInUrl();
+        this.instagramUrl = dto.getInstagramUrl();
+    }
 }
