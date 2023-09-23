@@ -1,19 +1,13 @@
 package com.example.backend.domain.user.controller;
 
-import com.example.backend.domain.user.controller.dto.request.UserRequestDto;
-import com.example.backend.domain.user.model.User;
+import com.example.backend.domain.user.controller.dto.request.SaveUserRequest;
+import com.example.backend.domain.user.controller.dto.response.UserInformationDto;
+import com.example.backend.domain.user.controller.dto.response.UserListReponse;
+import com.example.backend.domain.user.model.OrderType;
+import com.example.backend.domain.user.model.Position;
 import com.example.backend.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import com.example.backend.domain.user.controller.dto.response.UserInformationDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/users")
 @RestController
@@ -32,14 +26,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponseDto> getUsers(final @RequestParam String position, final @RequestParam String orderType) {
-        OrderType type;
-        if (orderType.isBlank()) type = null;
-        else type = OrderType.valueOf(orderType);
-
-        if (position.isBlank()) return userService.getUsers(type);
-
-        Position pos = Position.valueOf(position);
-        return userService.getUsers(pos, type);
+    public UserListReponse getUsers(@RequestParam("position") Position position, @RequestParam("orderType") OrderType orderType) {
+        return userService.getUsers(position, orderType);
     }
 }

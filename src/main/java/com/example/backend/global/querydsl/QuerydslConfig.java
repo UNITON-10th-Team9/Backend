@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Configuration
 @RequiredArgsConstructor
 public class QuerydslConfig {
-    private final EntityManager entityManager;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Bean
     public JPAQueryFactory jpaQueryFactory() {
