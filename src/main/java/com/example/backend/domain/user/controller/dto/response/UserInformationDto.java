@@ -14,5 +14,6 @@ public class UserInformationDto {
     private Position position;
     private String organization;
     private Integer annual;
+    private final String introduce;
     private String[] profileUrl;
 }

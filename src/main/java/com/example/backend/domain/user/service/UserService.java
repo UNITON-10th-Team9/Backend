@@ -64,6 +64,7 @@ public class UserService {
                 .email(user.getEmail())
                 .position(user.getPosition())
                 .organization(user.getOrganization())
+                .introduce(user.getIntroduce())
                 .annual(user.getAnnual())
                 .profileUrl(profileUrl)
                 .build();
