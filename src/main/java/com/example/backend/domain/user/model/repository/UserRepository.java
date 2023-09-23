@@ -10,14 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-    Optional<User> findByPhoneNumber(final String phoneNumber);
+    Optional<User> findByPhoneNumber(String phoneNumber);
 
-    List<User> findByPositionOrderByAnnual(final Position position);
-
-    List<User> findByPositionOrderByAnnualDesc(final Position position);
-
-    List<User> findAllByOrderByAnnualAsc();
-
-    List<User> findAllByOrderByAnnualDesc();
-
+    void updateUserById(Long id, User user);
 }

@@ -16,7 +16,7 @@ public class UserResponseDto {
     private String phoneNumber;
     private Position position;
     private String organization;
-    private int annual;
+    private Integer annual;
     private String profileImageUrl;
     private String introduce;
     private String githubUrl;
@@ -34,9 +34,6 @@ public class UserResponseDto {
                 .annual(user.getAnnual())
                 .profileImageUrl(user.getProfileImageUrl())
                 .introduce(user.getIntroduce())
-                .githubUrl(user.getGithubUrl())
-                .linkedInUrl(user.getLinkedInUrl())
-                .instagramUrl(user.getInstagramUrl())
                 .build();
     }
 }
