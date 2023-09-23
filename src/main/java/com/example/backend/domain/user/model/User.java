@@ -35,10 +35,10 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     private int annual;
 
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'AWDAWD'", nullable = false)
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'AWDAWD'")
     private String profileImageUrl;
 
-    @Column(columnDefinition = "VARCHAR(255)", nullable = false)
+    @Column(columnDefinition = "VARCHAR(255)")
     private String introduce;
 
     @Column(columnDefinition = "VARCHAR(255)")

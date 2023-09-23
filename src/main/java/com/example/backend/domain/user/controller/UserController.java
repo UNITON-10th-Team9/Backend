@@ -5,19 +5,27 @@ import com.example.backend.domain.user.controller.dto.response.UserInformationDt
 import com.example.backend.domain.user.controller.dto.response.UserListReponse;
 import com.example.backend.domain.user.model.OrderType;
 import com.example.backend.domain.user.model.Position;
+import com.example.backend.domain.user.service.UserCsvService;
 import com.example.backend.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/users")
 @RestController
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserCsvService userCsvService;
 
     @PostMapping()
     public void saveUser(@RequestBody SaveUserRequest body) {
         userService.saveUser(body);
+    }
+
+    @PostMapping("/csv")
+    public void saveUser(@RequestPart("file") MultipartFile file) {
+        userCsvService.save(file);
     }
       
     @GetMapping("/info")
