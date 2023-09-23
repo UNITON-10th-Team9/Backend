@@ -6,7 +6,12 @@ import com.example.backend.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.example.backend.domain.user.controller.dto.response.UserInformationDto;
+import com.example.backend.domain.user.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -20,5 +25,10 @@ public class UserController {
     @PostMapping("/user")
     public void saveUser(@RequestBody UserRequestDto body) {
         userService.saveUser(body);
+    }
+      
+    @GetMapping("/user")
+    public UserInformationDto getUserInformation(@RequestParam String phoneNumber) {
+        return userService.getUserInformation(phoneNumber);
     }
 }
