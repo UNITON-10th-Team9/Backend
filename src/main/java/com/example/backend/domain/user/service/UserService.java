@@ -1,13 +1,20 @@
 package com.example.backend.domain.user.service;
 
 import com.example.backend.domain.user.controller.dto.request.UserRequestDto;
+import com.example.backend.domain.user.controller.dto.response.UserResponseDto;
+import com.example.backend.domain.user.model.OrderType;
+import com.example.backend.domain.user.model.Position;
 import com.example.backend.domain.user.model.User;
 import com.example.backend.domain.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.example.backend.domain.user.model.OrderType.ASC;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +41,29 @@ public class UserService {
                     .build();
             userRepository.save(user);
         }
+    }
+
+    public List<UserResponseDto> getUsers(final Position position, final OrderType orderType) {
+        if (orderType == ASC) return userRepository.findByPositionOrderByAnnual(position)
+                .stream()
+                .map(UserResponseDto::of)
+                .collect(Collectors.toList());
+
+        return userRepository.findByPositionOrderByAnnualDesc(position)
+                .stream()
+                .map(UserResponseDto::of)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserResponseDto> getUsers(final OrderType orderType) {
+        if (orderType == ASC) return userRepository.findAllByOrderByAnnualAsc()
+                .stream()
+                .map(UserResponseDto::of)
+                .collect(Collectors.toList());
+
+        return userRepository.findAllByOrderByAnnualDesc()
+                .stream()
+                .map(UserResponseDto::of)
+                .collect(Collectors.toList());
     }
 }
