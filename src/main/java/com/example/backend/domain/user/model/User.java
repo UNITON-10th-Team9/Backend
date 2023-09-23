@@ -1,21 +1,28 @@
 package com.example.backend.domain.user.model;
 
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import com.example.backend.domain.user.controller.dto.request.SaveUserRequest;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+import lombok.*;
 
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Getter
 @Table(name = "tbl_usr")
 public class User {
 
     @Id
     @PrimaryKeyJoinColumn
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(columnDefinition = "VARCHAR(60)", nullable = false)
@@ -44,5 +51,17 @@ public class User {
     private String introduce;
 
     @Column(columnDefinition = "VARCHAR(255)")
-    private String url;
+    private String profileUrl;
+
+    public void setUserInformation(final SaveUserRequest dto) {
+        this.name = dto.getName();
+        this.email = dto.getEmail();
+        this.phoneNumber = dto.getPhoneNumber();
+        this.position = dto.getPosition();
+        this.organization = dto.getOrganization();
+        this.annual = dto.getAnnual();
+        this.profileImageUrl = dto.getProfileImageUrl();
+        this.introduce = dto.getIntroduce();
+        this.profileUrl = dto.getProfileUrl();
+    }
 }
