@@ -1,19 +1,15 @@
 package com.example.backend.domain.user.service;
 
-import com.example.backend.domain.user.controller.dto.request.UserRequestDto;
+import com.example.backend.domain.user.controller.dto.request.SaveUserRequest;
+import com.example.backend.domain.user.controller.dto.response.UserInformationDto;
 import com.example.backend.domain.user.model.User;
 import com.example.backend.domain.user.model.repository.UserRepository;
+import com.example.backend.global.error.exception.CustomeException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import com.example.backend.domain.user.controller.dto.response.UserInformationDto;
-import com.example.backend.domain.user.model.User;
-import com.example.backend.domain.user.model.repository.UserRepository;
-import com.example.backend.global.error.exception.CustomeException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import static com.example.backend.global.error.exception.ErrorCode.USER_NOT_FOUND;
 
@@ -23,24 +19,24 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void saveUser(final UserRequestDto body) {
-        Optional<User> findUser = userRepository.findByPhoneNumber(body.getPhoneNumber());
+    public void saveUser(SaveUserRequest request) {
+        Optional<User> user = userRepository.findByPhoneNumber(request.getPhoneNumber());
 
-        if (findUser.isPresent()) {
-            User user = findUser.get();
-            user.setUserInformation(body);
+        User userEntity = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .organization(request.getOrganization())
+                .position(request.getPosition())
+                .annual(request.getAnnual())
+                .profileImageUrl(request.getProfileImageUrl())
+                .introduce(request.getIntroduce())
+                .build();
+
+        if (user.isPresent()) {
+            userRepository.updateUserById(user.get().getId(), userEntity);
         } else {
-            User user = User.builder()
-                    .name(body.getName())
-                    .email(body.getEmail())
-                    .phoneNumber(body.getPhoneNumber())
-                    .position(body.getPosition())
-                    .organization(body.getOrganization())
-                    .annual(body.getAnnual())
-                    .profileImageUrl(body.getProfileImageUrl())
-                    .introduce(body.getIntroduce())
-                    .build();
-            userRepository.save(user);
+            userRepository.save(userEntity);
         }
     }
   
