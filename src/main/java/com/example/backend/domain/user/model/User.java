@@ -1,11 +1,11 @@
 package com.example.backend.domain.user.model;
 
-import com.example.backend.domain.user.controller.dto.request.SaveUserRequest;
-import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
@@ -35,7 +35,7 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     private int annual;
 
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT = Awd", nullable = false)
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'AWDAWD'", nullable = false)
     private String profileImageUrl;
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
@@ -44,15 +44,17 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255)")
     private String profileUrl;
 
-    public void setUserInformation(final SaveUserRequest dto) {
-        this.name = dto.getName();
-        this.email = dto.getEmail();
-        this.phoneNumber = dto.getPhoneNumber();
-        this.position = dto.getPosition();
-        this.organization = dto.getOrganization();
-        this.annual = dto.getAnnual();
-        this.profileImageUrl = dto.getProfileImageUrl();
-        this.introduce = dto.getIntroduce();
-        this.profileUrl = dto.getProfileUrl();
+    @Builder
+    public User(Long id, String name, String email, String phoneNumber, Position position, String organization, int annual, String profileImageUrl, String introduce, String profileUrl) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.position = position;
+        this.organization = organization;
+        this.annual = annual;
+        this.profileImageUrl = profileImageUrl;
+        this.introduce = introduce;
+        this.profileUrl = profileUrl;
     }
 }

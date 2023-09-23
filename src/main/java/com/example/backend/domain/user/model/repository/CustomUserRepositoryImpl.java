@@ -17,7 +17,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     @Override
     public List<UserListVo> findAllByPositionAndOrderType(Position position, OrderType orderType) {
 //        return queryFactory.select(new QUserListVo(
-//
+//                    user
 //                ))
 //                .fetch();
         return null;

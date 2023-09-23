@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.example.backend.domain.user.controller.dto.response.UserListReponse.*;
 import static com.example.backend.global.error.exception.ErrorCode.USER_NOT_FOUND;
@@ -41,7 +40,8 @@ public class UserService {
                 .build();
 
         if (user.isPresent()) {
-            userRepository.updateUserById(user.get().getId(), userEntity);
+//            userRepository.updateById(user.get().getId(), userEntity);
+            System.out.printf("awd");
         } else {
             userRepository.save(userEntity);
         }
