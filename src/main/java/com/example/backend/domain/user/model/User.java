@@ -1,12 +1,11 @@
 package com.example.backend.domain.user.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
 @Getter
 @Table(name = "tbl_usr")
@@ -41,22 +40,9 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255)")
     private String introduce;
 
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT ''")
-    private String profileUrl;
-
-    @Builder
-    public User(Long id, String name, String email, String phoneNumber, Position position, String organization, int annual, String profileImageUrl, String introduce, String profileUrl) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.position = position;
-        this.organization = organization;
-        this.annual = annual;
-        this.profileImageUrl = profileImageUrl;
-        this.introduce = introduce;
-        this.profileUrl = profileUrl;
-    }
+    @Column(columnDefinition = "VARCHAR(255)")
+    @Builder.Default
+    private String profileUrl="";
 
     public User updateId(Long id) {
         this.id = id;
