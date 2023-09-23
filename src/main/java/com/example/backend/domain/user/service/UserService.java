@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.backend.domain.user.controller.dto.response.UserListReponse.*;
+import static com.example.backend.domain.user.controller.dto.response.UserListReponse.UserElement;
 import static com.example.backend.global.error.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
@@ -71,7 +71,14 @@ public class UserService {
     }
 
     private UserElement userListResponseBuilder(UserListVo vo) {
-        String[] profileUrl = Arrays.stream(vo.getProfileUrl().split(",")).map(String::trim).toArray(String[]::new);
+        String[] profileUrl;
+        if (vo.getProfileUrl() == null) {
+            profileUrl = new String[0]; // vo.getProfileUrl()이 null일 경우 빈 배열 반환
+        } else {
+            profileUrl = Arrays.stream(vo.getProfileUrl().split(","))
+                    .map(String::trim)
+                    .toArray(String[]::new);
+        }
 
         return UserElement.builder()
                 .id(vo.getId())

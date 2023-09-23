@@ -4,6 +4,7 @@ import com.example.backend.domain.user.model.OrderType;
 import com.example.backend.domain.user.model.Position;
 import com.example.backend.domain.user.model.repository.vo.QUserListVo;
 import com.example.backend.domain.user.model.repository.vo.UserListVo;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +19,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
 
     @Override
     public List<UserListVo> findAllByPositionAndOrderType(Position position, OrderType orderType) {
-        return queryFactory.select(new QUserListVo(
+        JPAQuery<UserListVo> query = queryFactory.select(new QUserListVo(
                         user.id,
                         user.name,
                         user.email,
@@ -29,7 +30,15 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
                         user.profileImageUrl,
                         user.introduce,
                         user.profileUrl
-                ))
-                .fetch();
+                )).from(user)
+                .where(user.position.eq(position));
+
+        if (orderType == OrderType.ASC) {
+            query.orderBy(user.id.asc());
+        } else if (orderType == OrderType.DESC) {
+            query.orderBy(user.id.desc());
+        }
+
+        return query.fetch();
     }
 }
