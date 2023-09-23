@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/user")
+    @PostMapping()
     public void saveUser(@RequestBody SaveUserRequest body) {
         userService.saveUser(body);
     }
       
-    @GetMapping("/user")
+    @GetMapping("/info")
     public UserInformationDto getUserInformation(@RequestParam String phoneNumber) {
         return userService.getUserInformation(phoneNumber);
     }
