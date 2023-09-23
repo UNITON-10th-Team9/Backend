@@ -28,7 +28,12 @@ public class UserService {
     @Transactional
     public void saveUser(SaveUserRequest request) {
         Optional<User> user = userRepository.findByPhoneNumber(request.getPhoneNumber());
-        String profileUrl = String.join(", ", request.getProfileUrl());
+        String profileUrl;
+        if (request.getProfileUrl() != null) {
+            profileUrl = String.join(", ", request.getProfileUrl());
+        } else {
+            profileUrl = "";
+        }
 
         User userEntity = User.builder()
                 .name(request.getName())
@@ -42,8 +47,7 @@ public class UserService {
                 .build();
 
         if (user.isPresent()) {
-//            userRepository.updateById(user.get().getId(), userEntity);
-            System.out.printf("awd");
+            userRepository.save(userEntity.updateId(user.get().getId()));
         } else {
             userRepository.save(userEntity);
         }
@@ -54,7 +58,6 @@ public class UserService {
                 .orElseThrow(() -> new CustomeException(USER_NOT_FOUND));
 
         return UserInformationDto.builder()
-                .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .position(user.getPosition())
@@ -72,14 +75,7 @@ public class UserService {
     }
 
     private UserElement userListResponseBuilder(UserListVo vo) {
-        String[] profileUrl;
-        if (vo.getProfileUrl() == null) {
-            profileUrl = new String[0]; // vo.getProfileUrl()이 null일 경우 빈 배열 반환
-        } else {
-            profileUrl = Arrays.stream(vo.getProfileUrl().split(","))
-                    .map(String::trim)
-                    .toArray(String[]::new);
-        }
+        String[] profileUrl = Arrays.stream(vo.getProfileUrl().split(",")).map(String::trim).toArray(String[]::new);
 
         return UserElement.builder()
                 .id(vo.getId())

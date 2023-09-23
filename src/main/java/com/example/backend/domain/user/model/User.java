@@ -57,4 +57,9 @@ public class User {
         this.introduce = introduce;
         this.profileUrl = profileUrl;
     }
+
+    public User updateId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

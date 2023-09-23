@@ -20,22 +20,23 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     @Override
     public List<UserListVo> findAllByPositionAndOrderType(Position position, OrderType orderType) {
         JPAQuery<UserListVo> query = queryFactory.select(new QUserListVo(
-                        user.id,
-                        user.name,
-                        user.email,
-                        user.phoneNumber,
-                        user.position,
-                        user.organization,
-                        user.annual,
-                        user.profileImageUrl,
-                        user.introduce,
-                        user.profileUrl
-                )).from(user)
-                .where(user.position.eq(position));
+                user.id,
+                user.name,
+                user.email,
+                user.phoneNumber,
+                user.position,
+                user.organization,
+                user.annual,
+                user.profileImageUrl,
+                user.introduce,
+                user.profileUrl
+        )).from(user);
 
-        if (orderType == OrderType.ASC) {
-            query.orderBy(user.id.asc());
-        } else if (orderType == OrderType.DESC) {
+        if (position != Position.ALL) {
+                query.where(user.position.eq(position));
+        }
+
+        if (orderType == OrderType.DESC) {
             query.orderBy(user.id.desc());
         }
 
