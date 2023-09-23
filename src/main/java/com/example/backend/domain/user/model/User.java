@@ -35,13 +35,13 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
     private int annual;
 
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'AWDAWD'")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String profileImageUrl;
 
     @Column(columnDefinition = "VARCHAR(255)")
     private String introduce;
 
-    @Column(columnDefinition = "VARCHAR(255)")
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String profileUrl;
 
     @Builder

@@ -37,7 +37,9 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
         }
 
         if (orderType == OrderType.DESC) {
-            query.orderBy(user.id.desc());
+            query.orderBy(user.annual.desc());
+        } else {
+            query.orderBy(user.annual.asc());
         }
 
         return query.fetch();
