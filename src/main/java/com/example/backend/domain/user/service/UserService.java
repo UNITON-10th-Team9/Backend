@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +71,8 @@ public class UserService {
     }
 
     private UserElement userListResponseBuilder(UserListVo vo) {
+        String[] profileUrl = Arrays.stream(vo.getProfileUrl().split(",")).map(String::trim).toArray(String[]::new);
+
         return UserElement.builder()
                 .id(vo.getId())
                 .name(vo.getName())
@@ -80,7 +83,7 @@ public class UserService {
                 .annual(vo.getAnnual())
                 .profileImageUrl(vo.getProfileImageUrl())
                 .introduce(vo.getIntroduce())
-                .profileImageUrl(vo.getProfileUrl())
+                .profileUrl(profileUrl)
                 .build();
     }
 }
