@@ -46,7 +46,7 @@ public class User {
     private String organization;
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
-    private String annual;
+    private int annual;
 
     @Column(columnDefinition = "VARCHAR(255) DEFAULT = Awd", nullable = false)
     private String profileImageUrl;

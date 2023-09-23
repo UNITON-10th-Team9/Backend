@@ -16,7 +16,7 @@ public class UserResponseDto {
     private String phoneNumber;
     private Position position;
     private String organization;
-    private String annual;
+    private int annual;
     private String profileImageUrl;
     private String introduce;
     private String githubUrl;
