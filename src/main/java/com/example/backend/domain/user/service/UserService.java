@@ -2,15 +2,22 @@ package com.example.backend.domain.user.service;
 
 import com.example.backend.domain.user.controller.dto.request.SaveUserRequest;
 import com.example.backend.domain.user.controller.dto.response.UserInformationDto;
+import com.example.backend.domain.user.controller.dto.response.UserListReponse;
+import com.example.backend.domain.user.model.OrderType;
+import com.example.backend.domain.user.model.Position;
 import com.example.backend.domain.user.model.User;
 import com.example.backend.domain.user.model.repository.UserRepository;
+import com.example.backend.domain.user.model.repository.vo.UserListVo;
 import com.example.backend.global.error.exception.CustomeException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static com.example.backend.domain.user.controller.dto.response.UserListReponse.*;
 import static com.example.backend.global.error.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
@@ -39,7 +46,7 @@ public class UserService {
             userRepository.save(userEntity);
         }
     }
-  
+
     public UserInformationDto getUserInformation(final String phoneNumber) {
         User user = userRepository.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new CustomeException(USER_NOT_FOUND));
@@ -50,6 +57,30 @@ public class UserService {
                 .email(user.getEmail())
                 .position(user.getPosition())
                 .organization(user.getOrganization())
+                .build();
+    }
+
+    public UserListReponse getUsers(Position position, OrderType orderType) {
+        List<UserElement> userList = userRepository.findAllByPositionAndOrderType(position, orderType)
+                .stream()
+                .map(this::userListResponseBuilder)
+                .toList();
+
+        return new UserListReponse(userList);
+    }
+
+    private UserElement userListResponseBuilder(UserListVo vo) {
+        return UserElement.builder()
+                .id(vo.getId())
+                .name(vo.getName())
+                .email(vo.getEmail())
+                .phoneNumber(vo.getPhoneNumber())
+                .position(vo.getPosition())
+                .organization(vo.getOrganization())
+                .annual(vo.getAnnual())
+                .profileImageUrl(vo.getProfileImageUrl())
+                .introduce(vo.getIntroduce())
+                .profileImageUrl(vo.getProfileUrl())
                 .build();
     }
 }

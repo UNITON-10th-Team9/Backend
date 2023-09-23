@@ -1,28 +1,19 @@
 package com.example.backend.domain.user.model;
 
 import com.example.backend.domain.user.controller.dto.request.SaveUserRequest;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
 import lombok.*;
+import javax.persistence.*;
 
 @Builder
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Getter
 @Table(name = "tbl_usr")
 public class User {
 
     @Id
-    @PrimaryKeyJoinColumn
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(columnDefinition = "VARCHAR(60)", nullable = false)
@@ -42,7 +33,7 @@ public class User {
     private String organization;
 
     @Column(columnDefinition = "VARCHAR(255)", nullable = false)
-    private String annual;
+    private int annual;
 
     @Column(columnDefinition = "VARCHAR(255) DEFAULT = Awd", nullable = false)
     private String profileImageUrl;

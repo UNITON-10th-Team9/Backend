@@ -11,7 +11,7 @@ public class SaveUserRequest {
     private final String phoneNumber;
     private final Position position;
     private final String organization;
-    private final String annual;
+    private final Integer annual;
     private final String profileImageUrl;
     private final String introduce;
     private final String profileUrl;
