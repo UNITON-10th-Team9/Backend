@@ -13,6 +13,6 @@ public class UserInformationDto {
     private String email;
     private Position position;
     private String organization;
-    private String annual;
+    private Integer annual;
     private String[] profileUrl;
 }

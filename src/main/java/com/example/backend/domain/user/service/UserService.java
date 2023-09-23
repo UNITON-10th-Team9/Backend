@@ -57,11 +57,15 @@ public class UserService {
         User user = userRepository.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new CustomeException(USER_NOT_FOUND));
 
+        String[] profileUrl = Arrays.stream(user.getProfileUrl().split(",")).map(String::trim).toArray(String[]::new);
+
         return UserInformationDto.builder()
                 .name(user.getName())
                 .email(user.getEmail())
                 .position(user.getPosition())
                 .organization(user.getOrganization())
+                .annual(user.getAnnual())
+                .profileUrl(profileUrl)
                 .build();
     }
 
