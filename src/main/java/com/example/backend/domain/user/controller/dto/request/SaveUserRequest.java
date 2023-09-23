@@ -14,5 +14,5 @@ public class SaveUserRequest {
     private final Integer annual;
     private final String profileImageUrl;
     private final String introduce;
-    private final String profileUrl;
+    private final String[] profileUrl;
 }

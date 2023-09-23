@@ -27,6 +27,7 @@ public class UserService {
     @Transactional
     public void saveUser(SaveUserRequest request) {
         Optional<User> user = userRepository.findByPhoneNumber(request.getPhoneNumber());
+        String profileUrl = String.join(", ", request.getProfileUrl());
 
         User userEntity = User.builder()
                 .name(request.getName())
@@ -35,8 +36,8 @@ public class UserService {
                 .organization(request.getOrganization())
                 .position(request.getPosition())
                 .annual(request.getAnnual())
-                .profileImageUrl(request.getProfileImageUrl())
                 .introduce(request.getIntroduce())
+                .profileUrl(profileUrl)
                 .build();
 
         if (user.isPresent()) {
